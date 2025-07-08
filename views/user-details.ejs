@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2>User Details</h2>
+        <table class="table table-bordered w-50">
+            <tr>
+                <th>Name</th>
+                <td><%= user.name %></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><%= user.email %></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td><%= user.status %></td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td><%= user.remarks || '-' %></td>
+            </tr>
+            <tr>
+                <th>Document</th>
+                <td><a href="/uploads/<%= user.document %>" target="_blank">View Document</a></td>
+            </tr>
+        </table>
+        <a href="/users" class="btn btn-secondary mt-3">Back to Users</a>
+        <a href="/dashboard" class="btn btn-primary mt-3 ms-2">Dashboard</a>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const multer = require('multer');
 const User = require('../models/User');
+const XLSX = require('xlsx');
 
 // File upload config
 const storage = multer.diskStorage({
@@ -78,5 +79,25 @@ router.get('/', (req, res) => {
     res.redirect('/login');
 });
 
+// ---- Bulk Upload Form ----
+router.get('/bulk-upload', (req, res) => {
+    res.render('add-bulk-users');
+});
+
+// ---- Bulk Upload Handler ----
+router.post('/bulk-upload', upload.single('excel'), async (req, res) => {
+    try {
+        const filePath = req.file.path;
+        const workbook = XLSX.readFile(filePath);
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(sheet);
+        // data = [{name:..., email:..., document:...}, ...]
+        await User.insertMany(data);
+        res.redirect('/users');
+    } catch (err) {
+        res.status(500).send('Bulk upload error: ' + err.message);
+    }
+});
 
 module.exports = router;

@@ -16,7 +16,6 @@ yarn-error.log*
 Thumbs.db
 
 # Uploaded files
-uploads/
 
 # VSCode settings
 .vscode/

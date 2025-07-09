@@ -15,11 +15,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// ---- Root redirect to Login ----
-router.get('/', (req, res) => {
-    res.redirect('/login');
-});
-
 // ---- Admin Login ----
 router.get('/login', (req, res) => {
     res.render('login');
@@ -72,11 +67,16 @@ router.post('/user/:id/update', async (req, res) => {
     await User.findByIdAndUpdate(req.params.id, { status, remarks });
     res.redirect('/users');
 });
-
 router.get('/logout', (req, res) => {
     req.session.destroy(() => {
         res.redirect('/login');
     });
 });
+
+// ---- Root redirect to Login ----
+router.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
 
 module.exports = router;
